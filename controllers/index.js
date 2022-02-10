@@ -6,6 +6,17 @@ import validator from "../middleware/validator";
 const service = new Service();
 const router = Router();
 
+/** @route   GET /
+ *  @desc    Get Root
+ *  @access  Public
+ */
+router.get(
+  "/",
+  asyncWrapper(async (req, res) => {
+    res.send({ message: "welcome opensear!" });
+  })
+);
+
 /** @route   GET /screenshot
  *  @desc    Get Screenshot
  *  @access  Public

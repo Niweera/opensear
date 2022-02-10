@@ -5,7 +5,7 @@ import chalk from "chalk";
 import Middleware from "./middleware";
 import Controller from "./controllers";
 
-const PORT = config.HTTP_PORT;
+const PORT = config.PORT;
 
 const app = express();
 
