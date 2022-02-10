@@ -2,6 +2,7 @@ import { Router } from "express";
 import asyncWrapper from "../utilities/async-wrapper";
 import Service from "../services";
 import validator from "../middleware/validator";
+import rateLimiter from "../middleware/rate-limiter";
 
 const service = new Service();
 const router = Router();
@@ -23,6 +24,7 @@ router.get(
  */
 router.get(
   "/screenshot",
+  [rateLimiter],
   asyncWrapper(async (req, res) => {
     const { tweetID, screenshot } = await service.getScreenshot();
     res.writeHead(200, {
@@ -40,6 +42,7 @@ router.get(
  */
 router.get(
   "/metadata",
+  [rateLimiter],
   asyncWrapper(async (req, res) => {
     res.send(await service.getMetadata());
   })
