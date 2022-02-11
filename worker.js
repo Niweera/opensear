@@ -17,6 +17,7 @@ function start() {
     async (job, done) => {
       job.progress(0);
       const tweetID = job.id;
+      console.log(`Now executing job ${tweetID}`);
       const tweetPikService = new TweetPikService();
       const imageService = new ImageService();
       const twitterService = new TwitterService();
@@ -39,7 +40,7 @@ function start() {
       await openSeaRobot.run(imageFilePath, metadata);
       xvfb.stopSync();
       job.progress(100);
-
+      console.log(`Job ${tweetID} executed`);
       done();
     }
   );

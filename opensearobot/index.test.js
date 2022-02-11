@@ -36,3 +36,5 @@ const headfull = async () => {
 
   await openSeaRobot.run(imageFilePath, metadata);
 };
+
+headless().then();

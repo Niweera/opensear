@@ -10,3 +10,9 @@ Check out my NFT collection [a wordle a day keeps the sadness away](https://open
 # Install Xvfb and supported packages
 $ sudo apt-get install -y xvfb libgbm-dev libxkbcommon-x11-0 libgtk-3-0
 ```
+
+## Start OpenSear
+
+```bash
+$ pm2 start --name "opensear" npm -- start
+```
