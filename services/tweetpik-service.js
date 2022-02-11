@@ -18,6 +18,7 @@ export default class TweetPikService {
       }
     );
 
+    console.log(`Now obtained the original screenshot`);
     return `${response.data.url}?${new Date().getTime()}`;
   }
 }

@@ -6,25 +6,32 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node --experimental-specifier-resolution=node .",
+    "worker": "node --experimental-specifier-resolution=node worker.js",
     "cli": "node --experimental-specifier-resolution=node services/twitter-cli.js"
   },
   "author": "Nipuna Weerasekara",
   "type": "module",
   "license": "MIT",
   "dependencies": {
+    "@chainsafe/dappeteer": "^2.3.0",
     "axios": "^0.25.0",
     "body-parser": "^1.19.1",
+    "bull": "^4.5.1",
     "chalk": "^5.0.0",
     "cors": "^2.8.5",
     "dayjs": "^1.10.7",
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
     "express-rate-limit": "^6.2.1",
+    "foreman": "^3.0.1",
     "helmet": "^5.0.2",
     "jimp": "^0.16.1",
     "joi": "^17.6.0",
     "morgan": "^1.10.0",
-    "twitter-api-v2": "^1.10.0"
+    "puppeteer": "^13.3.1",
+    "throng": "^5.0.0",
+    "twitter-api-v2": "^1.10.0",
+    "xvfb": "^0.4.0"
   },
   "devDependencies": {
     "jest": "^27.5.1"

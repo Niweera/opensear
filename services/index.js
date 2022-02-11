@@ -1,52 +1,9 @@
 import { AuthenticationError } from "../errors";
 import config from "../keys";
 import crypto from "crypto";
-import TweetPikService from "./tweetpik-service";
-import ImageService from "./image-service";
-import TwitterService from "./twitter-service";
+import Queue from "bull";
 
 export default class Service {
-  constructor() {
-    this.tweetPikService = new TweetPikService();
-    this.imageService = new ImageService();
-    this.twitterService = new TwitterService();
-  }
-
-  async getScreenshot() {
-    const tweetID = await this.twitterService.getTweetID();
-    const originalScreenshot = await this.tweetPikService.getScreenshot(
-      tweetID
-    );
-    const screenshot = await this.imageService.removeWatermark(
-      originalScreenshot
-    );
-    return {
-      tweetID,
-      screenshot,
-    };
-  }
-
-  async getMetadata() {
-    const tweetID = await this.twitterService.getTweetID();
-    const { tweetText, username, tweetDate } =
-      await this.twitterService.getTweetByID(tweetID);
-    const statistics = this.twitterService.getStatistics(tweetText);
-    const tries = this.twitterService.getTries(tweetText);
-    const tweetURL = this.twitterService.getURL(username, tweetID);
-    const description = this.twitterService.getDescription(
-      tweetText,
-      tweetDate
-    );
-    const name = this.twitterService.getTitle(tweetText);
-    return {
-      name,
-      tweetURL,
-      description,
-      tries,
-      statistics,
-    };
-  }
-
   getHandler({ crc_token: crcToken }) {
     if (crcToken) {
       return {
@@ -77,13 +34,15 @@ export default class Service {
       )
         return {};
 
-      const originalScreenshot = await this.tweetPikService.getScreenshot(
-        tweetCreateEvent.id_str
+      const workQueue = new Queue(config.REDIS_QUEUE_NAME, config.REDIS_URL);
+
+      await workQueue.add(
+        config.BULL_PROCESS_NAME,
+        {},
+        {
+          jobId: tweetCreateEvent.id_str,
+        }
       );
-      const imageBuffer = await this.imageService.removeWatermark(
-        originalScreenshot
-      );
-      console.log(imageBuffer);
     }
     return {};
   }

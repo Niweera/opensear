@@ -77,4 +77,22 @@ export default class TwitterService {
 
     return tweets.tweets[0].id;
   }
+
+  async getMetadata() {
+    console.log("Now obtaining the metadata...");
+    const tweetID = await this.getTweetID();
+    const { tweetText, username, tweetDate } = await this.getTweetByID(tweetID);
+    const statistics = this.getStatistics(tweetText);
+    const tries = this.getTries(tweetText);
+    const tweetURL = this.getURL(username, tweetID);
+    const description = this.getDescription(tweetText, tweetDate);
+    const name = this.getTitle(tweetText);
+    return {
+      name,
+      tweetURL,
+      description,
+      tries,
+      statistics,
+    };
+  }
 }
