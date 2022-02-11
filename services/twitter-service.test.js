@@ -13,8 +13,3 @@ test("twitterService", async () => {
     twitterService.getDescription(tweetData.tweetText, tweetData.tweetDate)
   );
 });
-
-test("twitterService-getTweet", async () => {
-  const twitterService = new TwitterService();
-  await twitterService.getTweetID();
-});

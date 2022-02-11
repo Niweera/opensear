@@ -1,5 +1,0 @@
-{
-  "addons": [
-    "heroku-redis"
-  ]
-}

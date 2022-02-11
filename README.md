@@ -8,5 +8,5 @@ Check out my NFT collection [a wordle a day keeps the sadness away](https://open
 
 ```bash
 # Install Xvfb and supported packages
-$ sudo apt-get install -y xvfb libgbm-dev libxkbcommon-x11-0 libgtk-3-0 libxkbcommon-x11
+$ sudo apt-get install -y xvfb libgbm-dev libxkbcommon-x11-0 libgtk-3-0
 ```

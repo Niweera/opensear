@@ -69,18 +69,8 @@ export default class TwitterService {
     return `# ${tweetText.split("\n")[0]}\n${tweetDate}`;
   }
 
-  async getTweetID() {
-    const { screen_name } = await this.twitterClient.currentUser();
-    const tweets = await this.twitterClient.v2.search(
-      `from:${screen_name} Wordle`
-    );
-
-    return tweets.tweets[0].id;
-  }
-
-  async getMetadata() {
+  async getMetadata(tweetID) {
     console.log("Now obtaining the metadata...");
-    const tweetID = await this.getTweetID();
     const { tweetText, username, tweetDate } = await this.getTweetByID(tweetID);
     const statistics = this.getStatistics(tweetText);
     const tries = this.getTries(tweetText);

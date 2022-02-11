@@ -10,7 +10,7 @@ export default class ImageService {
 
     const maskPath = path.resolve(path.join(__dirname, "assets", "mask.png"));
     const outputPath = path.resolve(
-      path.join(__dirname, "assets", `${tweetID}.png`)
+      path.join(__dirname, "temp", `${tweetID}.png`)
     );
 
     const baseImage = await Jimp.read(originalScreenshot);

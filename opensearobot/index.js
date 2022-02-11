@@ -5,9 +5,7 @@ import * as fs from "fs";
 
 export default class OpenSeaRobot {
   constructor() {
-    this.seed = config.METAMASK_MNEMONIC_PHRASE;
-    this.collectionName = config.COLLECTION_NAME;
-    this.createAssetURL = `https://opensea.io/collection/${this.collectionName}/assets/create`;
+    this.createAssetURL = `https://opensea.io/collection/${config.COLLECTION_NAME}/assets/create`;
   }
 
   async connectWallet(page, metamask) {
@@ -16,12 +14,12 @@ export default class OpenSeaRobot {
       '//button[contains(.,"Show more options")]'
     );
     await moreButton[0].click();
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(5000);
     const metaMaskButton = await page.$x(
       '//button[.//span[contains(text(),"MetaMask")]]'
     );
     await metaMaskButton[0].click();
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
     await metamask.approve();
     console.log("Wallet connected");
   }
@@ -53,8 +51,17 @@ export default class OpenSeaRobot {
     });
     console.log("Setting up MetaMask...");
     const metamask = await dappeteer.setupMetamask(browser, {
-      seed: this.seed,
+      seed: config.METAMASK_MNEMONIC_PHRASE,
+      password: config.METAMASK_PASSWORD,
     });
+    await metamask.addNetwork({
+      networkName: "Polygon Mainnet",
+      rpc: "https://polygon-rpc.com/",
+      chainId: 137,
+      symbol: "MATIC",
+      explorer: "https://polygonscan.com/",
+    });
+    await metamask.switchNetwork("Polygon Mainnet");
     console.log("Launching OpenSea...");
     const page = await browser.newPage();
     await page.goto(this.createAssetURL, { waitUntil: "networkidle0" });
@@ -69,7 +76,7 @@ export default class OpenSeaRobot {
     console.log("Sign initial request...");
     await metamask.sign();
     await page.bringToFront();
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
 
     console.log("Creating new asset...");
     await page.bringToFront();
@@ -77,7 +84,7 @@ export default class OpenSeaRobot {
     await page.waitForSelector("#media");
 
     await this.uploadImage(page, imageFilePath);
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
 
     await this.fillFields(
       page,
@@ -94,7 +101,7 @@ export default class OpenSeaRobot {
     await page.waitForSelector(
       "div.AssetSuccessModalContentreact__DivContainer-sc-1vt1rp8-1"
     );
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(10000);
     console.log("Successfully minted the NFT...");
     await browser.close();
     console.log("Dappeteer closed...");

@@ -30,7 +30,7 @@ function start() {
       );
       job.progress(50);
 
-      const metadata = await twitterService.getMetadata();
+      const metadata = await twitterService.getMetadata(tweetID);
       job.progress(75);
 
       const xvfb = new Xvfb();
