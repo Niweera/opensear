@@ -4,15 +4,33 @@ OpenSear is a web app to view the assets and metadata to help me to publish my N
 
 Check out my NFT collection [a wordle a day keeps the sadness away](https://opensea.io/collection/wordle-keeps-sadness-away).
 
+## Architecture
+
+**OpenSear** is consisted of two separate systems, **OpenSear-API** (_opensear_) and **OpenSear-Worker** (_opensearobot_). The following is a high-level architecture of OpenSear system.
+
+![image](./assets/system.jpg)
+
+When a user tweets a specific tweet (in this case a tweet of a [wordle](https://www.nytimes.com/games/wordle/index.html)), the webhook created using [Twitter Account Activity API](https://developer.twitter.com/en/docs/twitter-api/premium/account-activity-api/overview) will send the payload to [OpenSear-API](https://opensear.niweera.gq). The OpenSear-API will queue a job in a Redis server using [Bull](https://github.com/OptimalBits/bull) and OpenSear-Worker will be notified of this job. 
+
+OpenSear-Worker will obtain a screenshot of the tweet (notified via the webhook payload) using [TweetPik Twitter Screenshot API](https://tweetpik.com/twitter-screenshot-api). The TweetPik screenshot has a watermark (luckily it's position is predictable) and the watermark is removed using [Jimp](https://github.com/oliver-moran/jimp) library. Then the watermark removed tweet screenshot is ready for minting an NFT and listing in [OpenSea.io](https://opensea.io) platform.
+
+Since [OpenSea.io](https://opensea.io) platform does not have an API for creating assets, the [puppeteer](https://www.npmjs.com/package/puppeteer) will automate the task and mint the NFT. The OpenSear-Worker will launch a [puppeteer](https://www.npmjs.com/package/puppeteer) browser, and it will be authenticated for [MetaMask](https://metamask.io/) using [@chainsafe/dappeteer](https://www.npmjs.com/package/@chainsafe/dappeteer) and finally the NFT is minted. This is where the OpenSear-Worker concludes its tasks. Then I manually list them by quoting a price later :D.
+
 ## Install Steps
 
 ```bash
 # Install Xvfb and supported packages
 $ sudo apt-get install -y xvfb libgbm-dev libxkbcommon-x11-0 libgtk-3-0
+$ npm install
 ```
 
-## Start OpenSear
+## Start OpenSear-API
 
 ```bash
 $ pm2 start --name "opensear" npm -- start
+```
+## Start OpenSear-Worker
+
+```bash
+$ pm2 start --name "opensearobot" npm -- run worker
 ```
