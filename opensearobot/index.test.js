@@ -7,7 +7,7 @@ import Xvfb from "xvfb";
 const headless = async () => {
   const xvfb = new Xvfb();
   xvfb.startSync();
-  const tweetID = "1492015695835672576";
+  const tweetID = "1491661057651183617";
   const openSeaRobot = new OpenSeaRobot();
   const twitterService = new TwitterService();
   const metadata = await twitterService.getMetadata(tweetID);
@@ -37,4 +37,8 @@ const headfull = async () => {
   await openSeaRobot.run(imageFilePath, metadata);
 };
 
-headfull().then();
+if (process.platform !== "win32") {
+  headless().then();
+} else {
+  headfull().then();
+}
