@@ -48,6 +48,7 @@ export default class OpenSeaRobot {
     console.log("Launching Dappeteer...");
     const browser = await dappeteer.launch(puppeteer, {
       metamaskVersion: config.METAMASK_VERSION,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
     console.log("Setting up MetaMask...");
     const metamask = await dappeteer.setupMetamask(browser, {
