@@ -41,6 +41,9 @@ export default class Service {
         {},
         {
           jobId: tweetCreateEvent.id_str,
+          removeOnComplete: true,
+          removeOnFail: true,
+          attempts: 1,
         }
       );
     }

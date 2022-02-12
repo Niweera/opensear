@@ -40,7 +40,7 @@ export default class OpenSeaRobot {
     await page.keyboard.type(description, { delay: 25 });
     await page.focus("#external_link");
     await page.keyboard.type(link, { delay: 25 });
-    console.log("writing metadata into fields completed...");
+    console.log("Writing metadata into fields completed...");
   }
 
   async fillLevels(page, tries) {
@@ -49,15 +49,23 @@ export default class OpenSeaRobot {
       '//*[@id="main"]/div/div/section/div[2]/form/section/div[2]/div/div[2]/button'
     );
     await levelsButton[0].click();
+
     await page.waitForSelector('input[placeholder="Speed"]');
     await page.focus('input[placeholder="Speed"]');
     await page.keyboard.type("Tries", { delay: 25 });
-    await page.$eval('input[value="5"]', (el) => (el.value = 6));
-    await page.$eval(
-      'input[value="3"]',
-      (el, tries) => (el.value = tries),
-      tries
-    );
+
+    await page.waitForTimeout(2000);
+    const maxInputs = await page.$$('input[placeholder="Max"]');
+    await maxInputs[0].focus();
+    await maxInputs[0].click({ clickCount: 3 });
+    await page.keyboard.type("6", { delay: 25 });
+
+    await page.waitForTimeout(2000);
+    const minInputs = await page.$$('input[placeholder="Min"]');
+    await minInputs[0].focus();
+    await minInputs[0].click({ clickCount: 3 });
+    await page.keyboard.type(tries, { delay: 25 });
+
     await page.waitForTimeout(2000);
     const saveButton = await page.$x(
       '//button[@type="button" and contains(.,"Save")]'
@@ -105,13 +113,13 @@ export default class OpenSeaRobot {
     const minInputs = await page.$$('input[placeholder="Min"]');
     await minInputs[0].focus();
     await minInputs[0].click({ clickCount: 3 });
-    await page.keyboard.type(statistics.blackBlocks.toString(), { delay: 25 });
+    await page.keyboard.type(statistics.blackBlocks, { delay: 25 });
     await minInputs[1].focus();
     await minInputs[1].click({ clickCount: 3 });
-    await page.keyboard.type(statistics.greenBlocks.toString(), { delay: 25 });
+    await page.keyboard.type(statistics.greenBlocks, { delay: 25 });
     await minInputs[2].focus();
     await minInputs[2].click({ clickCount: 3 });
-    await page.keyboard.type(statistics.yellowBlocks.toString(), { delay: 25 });
+    await page.keyboard.type(statistics.yellowBlocks, { delay: 25 });
 
     await page.waitForTimeout(2000);
     const saveButton = await page.$x(
@@ -121,9 +129,64 @@ export default class OpenSeaRobot {
     console.log("Writing statistics completed...");
   }
 
+  getLevelsList(trait) {
+    return {
+      trait: trait.split("\n").at(0),
+      values: trait.split("\n").at(-1).split(" of "),
+    };
+  }
+
+  async checkNumericTraits(page, tries, statistics) {
+    const numericTraits = await page.$$('div[class="NumericTrait--label"]');
+    const promises = numericTraits.map(async (el) => {
+      return page.evaluate((el) => el.innerText, el);
+    });
+    const numericTexts = await Promise.all(promises);
+
+    if (numericTexts.length !== 4)
+      throw Error("One of numeric traits are missing");
+
+    let tryLevels = this.getLevelsList(numericTexts[0]);
+    let black = this.getLevelsList(numericTexts[1]);
+    let green = this.getLevelsList(numericTexts[2]);
+    let yellow = this.getLevelsList(numericTexts[3]);
+
+    if (
+      tryLevels.trait !== "Tries" ||
+      tryLevels.values[0] !== tries ||
+      tryLevels.values[1] !== "6"
+    )
+      throw Error(`Tries do not match`);
+
+    if (
+      black.trait !== "Black" ||
+      black.values[0] !== statistics.blackBlocks ||
+      black.values[1] !== "30"
+    )
+      throw Error(`Black blocks do not match`);
+
+    if (
+      green.trait !== "Green" ||
+      green.values[0] !== statistics.greenBlocks ||
+      green.values[1] !== "30"
+    )
+      throw Error(`Green blocks do not match`);
+
+    if (
+      yellow.trait !== "Yellow" ||
+      yellow.values[0] !== statistics.yellowBlocks ||
+      yellow.values[1] !== "30"
+    )
+      throw Error(`Yellow blocks do not match`);
+
+    console.log(`Numeric traits metadata check completed...`);
+  }
+
   async run(imageFilePath, metadata) {
     console.log("OpenSeaRobot waking up...");
     console.log("Launching Dappeteer...");
+    console.log(`imageFilePath: ${imageFilePath}`);
+    console.log(`metadata: ${JSON.stringify(metadata)}`);
     const browser = await dappeteer.launch(puppeteer, {
       metamaskVersion: config.METAMASK_VERSION,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
@@ -173,6 +236,7 @@ export default class OpenSeaRobot {
     );
     await this.fillLevels(page, metadata.tries);
     await this.fillStats(page, metadata.statistics);
+    await this.checkNumericTraits(page, metadata.tries, metadata.statistics);
 
     console.log(`Minting NFT: ${metadata.name}...`);
     const createButton = await page.$x('//button[contains(., "Create")]');

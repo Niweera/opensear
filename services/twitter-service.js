@@ -43,9 +43,9 @@ export default class TwitterService {
     const yellowBlocks = (tweetText.match(yellowRe) || []).length;
 
     return {
-      blackBlocks,
-      greenBlocks,
-      yellowBlocks,
+      blackBlocks: blackBlocks.toString(),
+      greenBlocks: greenBlocks.toString(),
+      yellowBlocks: yellowBlocks.toString(),
     };
   }
 

@@ -23,7 +23,7 @@ const headless = async () => {
 };
 
 const headfull = async () => {
-  const tweetID = "1492405530044014597";
+  const tweetID = "1491661057651183617";
   const openSeaRobot = new OpenSeaRobot();
   const twitterService = new TwitterService();
   const metadata = await twitterService.getMetadata(tweetID);
