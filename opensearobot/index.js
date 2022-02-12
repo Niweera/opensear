@@ -43,6 +43,84 @@ export default class OpenSeaRobot {
     console.log("writing metadata into fields completed...");
   }
 
+  async fillLevels(page, tries) {
+    console.log("Writing levels...");
+    const levelsButton = await page.$x(
+      '//*[@id="main"]/div/div/section/div[2]/form/section/div[2]/div/div[2]/button'
+    );
+    await levelsButton[0].click();
+    await page.waitForSelector('input[placeholder="Speed"]');
+    await page.focus('input[placeholder="Speed"]');
+    await page.keyboard.type("Tries", { delay: 25 });
+    await page.$eval('input[value="5"]', (el) => (el.value = 6));
+    await page.$eval(
+      'input[value="3"]',
+      (el, tries) => (el.value = tries),
+      tries
+    );
+    await page.waitForTimeout(2000);
+    const saveButton = await page.$x(
+      '//button[@type="button" and contains(.,"Save")]'
+    );
+    await saveButton[0].click();
+    console.log("Writing levels completed...");
+  }
+
+  async fillStats(page, statistics) {
+    console.log("Writing statistics...");
+    const levelsButton = await page.$x(
+      '//*[@id="main"]/div/div/section/div[2]/form/section/div[3]/div/div[2]/button'
+    );
+    await levelsButton[0].click();
+
+    await page.waitForSelector('input[placeholder="Speed"]');
+    const addMore = await page.$x(
+      '//button[@type="button" and contains(.,"Add more")]'
+    );
+    await addMore[0].click();
+    await addMore[0].click();
+
+    await page.waitForTimeout(2000);
+    const nameInputs = await page.$$('input[placeholder="Speed"]');
+    await nameInputs[0].focus();
+    await page.keyboard.type("Black", { delay: 25 });
+    await nameInputs[1].focus();
+    await page.keyboard.type("Green", { delay: 25 });
+    await nameInputs[2].focus();
+    await page.keyboard.type("Yellow", { delay: 25 });
+
+    await page.waitForTimeout(2000);
+    const maxInputs = await page.$$('input[placeholder="Max"]');
+    await maxInputs[0].focus();
+    await maxInputs[0].click({ clickCount: 3 });
+    await page.keyboard.type("30", { delay: 25 });
+    await maxInputs[1].focus();
+    await maxInputs[1].click({ clickCount: 3 });
+    await page.keyboard.type("30", { delay: 25 });
+    await maxInputs[2].focus();
+    await maxInputs[2].click({ clickCount: 3 });
+    await page.keyboard.type("30", { delay: 25 });
+
+    await page.waitForTimeout(2000);
+    const minInputs = await page.$$('input[placeholder="Min"]');
+    await minInputs[0].focus();
+    await minInputs[0].click({ clickCount: 3 });
+    await page.keyboard.type(statistics.blackBlocks.toString(), { delay: 25 });
+    await minInputs[1].focus();
+    await minInputs[1].click({ clickCount: 3 });
+    await page.keyboard.type(statistics.greenBlocks.toString(), { delay: 25 });
+    await minInputs[2].focus();
+    await minInputs[2].click({ clickCount: 3 });
+    await page.keyboard.type(statistics.yellowBlocks.toString(), { delay: 25 });
+
+    await page.waitForTimeout(2000);
+    const saveButton = await page.$x(
+      '//button[@type="button" and contains(.,"Save")]'
+    );
+    await saveButton[0].click();
+    console.log("Writing statistics completed...");
+  }
+
   async run(imageFilePath, metadata) {
     console.log("OpenSeaRobot waking up...");
     console.log("Launching Dappeteer...");
@@ -93,6 +171,8 @@ export default class OpenSeaRobot {
       metadata.description,
       metadata.tweetURL
     );
+    await this.fillLevels(page, metadata.tries);
+    await this.fillStats(page, metadata.statistics);
 
     console.log(`Minting NFT: ${metadata.name}...`);
     const createButton = await page.$x('//button[contains(., "Create")]');
