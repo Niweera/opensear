@@ -18,7 +18,8 @@ const headless = async () => {
     path.join(__dirname, "temp", `${tweetID}.png`)
   );
 
-  await openSeaRobot.run(imageFilePath, metadata);
+  const assetURL = await openSeaRobot.run(imageFilePath, metadata);
+  await twitterService.addReplyToTweet(tweetID, assetURL);
   xvfb.stopSync();
 };
 
@@ -34,7 +35,8 @@ const headfull = async () => {
     path.join(__dirname, "temp", `${tweetID}.png`)
   );
 
-  await openSeaRobot.run(imageFilePath, metadata);
+  const assetURL = await openSeaRobot.run(imageFilePath, metadata);
+  await twitterService.addReplyToTweet(tweetID, assetURL);
 };
 
 if (process.platform !== "win32") {

@@ -13,3 +13,11 @@ test("twitterService", async () => {
     twitterService.getDescription(tweetData.tweetText, tweetData.tweetDate)
   );
 });
+
+test("twitterService-reply", async () => {
+  const tweetID = "1492589622085689346";
+  const assetURL =
+    "https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/3174924704537354725776608230933781217533108654819823768175757859634024546305";
+  const twitterService = new TwitterService();
+  await twitterService.addReplyToTweet(tweetID, assetURL);
+});

@@ -85,4 +85,13 @@ export default class TwitterService {
       statistics,
     };
   }
+
+  async addReplyToTweet(tweetID, assetURL) {
+    console.log("Now replying the asset URL to the original tweet...");
+    const reply = `☝ This tweet is for sale.\nCheck it out in @opensea marketplace.\n${assetURL}`;
+    await this.twitterClient.v2.reply(reply, tweetID);
+    console.log(
+      `Replied with the asset URL [${assetURL}] to the original tweet [${tweetID}]...`
+    );
+  }
 }

@@ -248,10 +248,13 @@ export default class OpenSeaRobot {
     );
     await page.waitForTimeout(10000);
     console.log("Successfully minted the NFT...");
+
+    const assetURL = page.url();
     await browser.close();
     console.log("Dappeteer closed...");
     this.cleanUp(imageFilePath);
     console.log("OpenSeaRobot going to sleep now...");
+    return assetURL;
   }
 
   cleanUp(imageFilePath) {

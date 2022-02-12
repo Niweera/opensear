@@ -34,16 +34,20 @@ function start() {
       const metadata = await twitterService.getMetadata(tweetID);
       job.progress(75);
 
+      let assetURL;
+
       if (process.platform !== "win32") {
         const xvfb = new Xvfb();
         xvfb.startSync();
         const openSeaRobot = new OpenSeaRobot();
-        await openSeaRobot.run(imageFilePath, metadata);
+        assetURL = await openSeaRobot.run(imageFilePath, metadata);
         xvfb.stopSync();
       } else {
         const openSeaRobot = new OpenSeaRobot();
-        await openSeaRobot.run(imageFilePath, metadata);
+        assetURL = await openSeaRobot.run(imageFilePath, metadata);
       }
+
+      await twitterService.addReplyToTweet(tweetID, assetURL);
 
       job.progress(100);
       console.log(`Job ${tweetID} executed`);
