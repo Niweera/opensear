@@ -138,7 +138,7 @@ export default class OpenSeaRobot {
 
   async checkNumericTraits(page, tries, statistics) {
     const numericTraits = await page.$$('div[class="NumericTrait--label"]');
-    const promises = numericTraits.map(async (element) => {
+    const promises = numericTraits.map((element) => {
       return page.evaluate((el) => el.innerText, element);
     });
     const numericTexts = await Promise.all(promises);
