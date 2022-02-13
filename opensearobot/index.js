@@ -43,6 +43,16 @@ export default class OpenSeaRobot {
     console.log("Writing metadata into fields completed...");
   }
 
+  getSideNTries(base, value) {
+    const side =
+      value - base > 0 ? "ArrowUp" : value - base < 0 ? "ArrowDown" : "";
+    const times = Math.abs(value - base);
+    return {
+      side,
+      times,
+    };
+  }
+
   async fillLevels(page, tries) {
     console.log("Writing levels...");
     const levelsButton = await page.$x(
@@ -57,14 +67,17 @@ export default class OpenSeaRobot {
     await page.waitForTimeout(2000);
     const maxInputs = await page.$$('input[placeholder="Max"]');
     await maxInputs[0].focus();
-    await maxInputs[0].click({ clickCount: 3 });
-    await page.keyboard.type("6", { delay: 25 });
+    await page.keyboard.press("ArrowUp");
 
     await page.waitForTimeout(2000);
     const minInputs = await page.$$('input[placeholder="Min"]');
     await minInputs[0].focus();
-    await minInputs[0].click({ clickCount: 3 });
-    await page.keyboard.type(tries, { delay: 25 });
+
+    const { side, times } = this.getSideNTries(3, parseInt(tries));
+    const promises = [...Array(times).keys()].map(() =>
+      page.keyboard.press(side)
+    );
+    await Promise.all(promises);
 
     await page.waitForTimeout(2000);
     const saveButton = await page.$x(
@@ -100,26 +113,41 @@ export default class OpenSeaRobot {
     await page.waitForTimeout(2000);
     const maxInputs = await page.$$('input[placeholder="Max"]');
     await maxInputs[0].focus();
-    await maxInputs[0].click({ clickCount: 3 });
-    await page.keyboard.type("30", { delay: 25 });
+    const promisesOne = [...Array(25).keys()].map(() =>
+      page.keyboard.press("ArrowUp")
+    );
+    await Promise.all(promisesOne);
     await maxInputs[1].focus();
-    await maxInputs[1].click({ clickCount: 3 });
-    await page.keyboard.type("30", { delay: 25 });
+    const promisesTwo = [...Array(25).keys()].map(() =>
+      page.keyboard.press("ArrowUp")
+    );
+    await Promise.all(promisesTwo);
     await maxInputs[2].focus();
-    await maxInputs[2].click({ clickCount: 3 });
-    await page.keyboard.type("30", { delay: 25 });
+    const promiseThree = [...Array(25).keys()].map(() =>
+      page.keyboard.press("ArrowUp")
+    );
+    await Promise.all(promiseThree);
 
     await page.waitForTimeout(2000);
     const minInputs = await page.$$('input[placeholder="Min"]');
     await minInputs[0].focus();
-    await minInputs[0].click({ clickCount: 3 });
-    await page.keyboard.type(statistics.blackBlocks, { delay: 25 });
+    const blackSides = this.getSideNTries(3, parseInt(statistics.blackBlocks));
+    const promiseOne = [...Array(blackSides.times).keys()].map(() =>
+      page.keyboard.press(blackSides.side)
+    );
+    await Promise.all(promiseOne);
     await minInputs[1].focus();
-    await minInputs[1].click({ clickCount: 3 });
-    await page.keyboard.type(statistics.greenBlocks, { delay: 25 });
+    const greenSides = this.getSideNTries(3, parseInt(statistics.greenBlocks));
+    const promiseTwo = [...Array(greenSides.times).keys()].map(() =>
+      page.keyboard.press(greenSides.side)
+    );
+    await Promise.all(promiseTwo);
     await minInputs[2].focus();
-    await minInputs[2].click({ clickCount: 3 });
-    await page.keyboard.type(statistics.yellowBlocks, { delay: 25 });
+    const yellowSide = this.getSideNTries(3, parseInt(statistics.yellowBlocks));
+    const promisesThree = [...Array(yellowSide.times).keys()].map(() =>
+      page.keyboard.press(yellowSide.side)
+    );
+    await Promise.all(promisesThree);
 
     await page.waitForTimeout(2000);
     const saveButton = await page.$x(
