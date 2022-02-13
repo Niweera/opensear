@@ -13,7 +13,11 @@ const router = Router();
 router.get(
   "/",
   asyncWrapper((req, res) => {
-    res.send({ message: "welcome opensear!" });
+    res.send({
+      message: "opensear is listening!",
+      maintainer: "https://github.com/Niweera",
+      source: "https://github.com/Niweera/opensear",
+    });
   })
 );
 

@@ -66,7 +66,9 @@ export default class TwitterService {
   }
 
   getDescription(tweetText, tweetDate) {
-    return `# ${tweetText.split("\n")[0]}\n${tweetDate}`;
+    return `# ${
+      tweetText.split("\n")[0]
+    }\n${tweetDate}\n\nSigned by [opensearobot](https://opensear.niweera.gq).`;
   }
 
   async getMetadata(tweetID) {
