@@ -1,0 +1,6 @@
+# action.yml
+name: 'OpenSeaRobot Worker'
+description: 'OpenSearRobot Worker Dockerized'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
