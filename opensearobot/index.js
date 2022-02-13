@@ -10,6 +10,7 @@ export default class OpenSeaRobot {
 
   async connectWallet(page, metamask) {
     console.log("Connecting to Metamask...");
+    await page.waitForXPath('//button[contains(.,"Show more options")]');
     const moreButton = await page.$x(
       '//button[contains(.,"Show more options")]'
     );
@@ -35,7 +36,6 @@ export default class OpenSeaRobot {
     console.log("Writing metadata into fields...");
     await page.focus("#name");
     await page.keyboard.type(name, { delay: 25 });
-    // Get and fill in the description
     await page.focus("#description");
     await page.keyboard.type(description, { delay: 25 });
     await page.focus("#external_link");
