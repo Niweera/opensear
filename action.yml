@@ -1,6 +1,11 @@
 # action.yml
 name: 'OpenSeaRobot Worker'
 description: 'OpenSearRobot Worker Dockerized'
+inputs:
+  tweetid:
+    description: 'Tweet ID'
+    required: true
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'

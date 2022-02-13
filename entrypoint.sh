@@ -4,4 +4,4 @@ set -e
 
 printf "\nNow running worker...\n"
 
-node --experimental-specifier-resolution=node /runner.js 1492597351089045505
+node --experimental-specifier-resolution=node /runner.js "$1"

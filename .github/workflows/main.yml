@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: First Step
         uses: Niweera/opensear@main
+        with:
+          tweetid: 1492597351089045505
         env:
           TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
           TWITTER_CLIENT_ID: ${{ secrets.TWITTER_CLIENT_ID }}
