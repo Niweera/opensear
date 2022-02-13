@@ -11,7 +11,8 @@ let validators = {
 
 function scopeExists(validator, scope) {
   return (
-    Object.keys(validator.scopes).find((key) => key === scope) !== undefined
+    typeof Object.keys(validator.scopes).find((key) => key === scope) !==
+    "undefined"
   );
 }
 

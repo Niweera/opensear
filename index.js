@@ -8,6 +8,7 @@ import Controller from "./controllers";
 const PORT = config.PORT;
 
 const app = express();
+app.disable("x-powered-by");
 
 Middleware(app);
 app.use("", Controller);

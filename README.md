@@ -1,3 +1,5 @@
+[![DeepSource](https://deepsource.io/gh/Niweera/opensear.svg/?label=active+issues&show_trend=true&token=QYOEsSlik9Rn1vj-ijdtzTuv)](https://deepsource.io/gh/Niweera/opensear/?ref=repository-badge)
+
 # OpenSear
 
 **OpenSear** is a system that helps me to mint and list my NFTs on [opensea.io](https://opensea.io) marketplace.
@@ -14,7 +16,7 @@ Check out my NFT collection [a wordle a day keeps the sadness away](https://open
 
 When a user tweets a specific tweet (in this case a tweet of a [wordle](https://www.nytimes.com/games/wordle/index.html)), the webhook created using [Twitter Account Activity API](https://developer.twitter.com/en/docs/twitter-api/premium/account-activity-api/overview) will send the payload to [OpenSear-API](https://opensear.niweera.gq). The OpenSear-API will queue a job in a Redis server using [Bull](https://github.com/OptimalBits/bull) and OpenSear-Worker will be notified of this job. 
 
-OpenSear-Worker will obtain a screenshot of the tweet (notified via the webhook payload) using [TweetPik Twitter Screenshot API](https://tweetpik.com/twitter-screenshot-api). The TweetPik screenshot has a watermark (luckily it's position is predictable) and the watermark is removed using [Jimp](https://github.com/oliver-moran/jimp) library. Then the watermark removed tweet screenshot is ready for minting an NFT and listing in [OpenSea.io](https://opensea.io) platform.
+OpenSear-Worker will obtain a screenshot of the tweet (notified via the webhook payload) using [TweetPik Twitter Screenshot API](https://tweetpik.com/twitter-screenshot-api). The TweetPik screenshot has a watermark (luckily it's position is predictable) and the watermark is removed using [Jimp](https://github.com/oliver-moran/jimp) library. Then the watermark removed tweet screenshot is ready for minting an NFT and listing on [OpenSea.io](https://opensea.io) platform.
 
 Since [OpenSea.io](https://opensea.io) platform does not have an API for creating assets, the [puppeteer](https://www.npmjs.com/package/puppeteer) will automate the task and mint the NFT. The OpenSear-Worker will launch a [puppeteer](https://www.npmjs.com/package/puppeteer) browser, and it will be authenticated for [MetaMask](https://metamask.io/) using [@chainsafe/dappeteer](https://www.npmjs.com/package/@chainsafe/dappeteer) and finally the NFT is minted. Finally, OpenSear-Worker will reply the original tweet with the OpenSea.io marketplace asset URL for the minted NFT. This is where the OpenSear-Worker concludes its tasks. Then I manually list them by quoting a price later 😁.
 

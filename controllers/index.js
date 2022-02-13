@@ -12,7 +12,7 @@ const router = Router();
  */
 router.get(
   "/",
-  asyncWrapper(async (req, res) => {
+  asyncWrapper((req, res) => {
     res.send({ message: "welcome opensear!" });
   })
 );
@@ -23,7 +23,7 @@ router.get(
  */
 router.get(
   "/callback",
-  asyncWrapper(async (req, res) => {
+  asyncWrapper((req, res) => {
     res.send(service.getHandler(req.query));
   })
 );
