@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Run OpenSear Worker
     steps:
-      - name: First Step
+      - name: Setup and Run Worker
         uses: Niweera/opensear@main
         with:
           tweetid: "1492986339381452800"

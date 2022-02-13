@@ -40,7 +40,8 @@ const start = async (tweetID) => {
     console.log(`Job ${tweetID} executed`);
     process.exit(0);
   } catch (e) {
-    console.error(`Job failed with error: ${e.message}`);
+    console.error(`Job failed with error`);
+    console.error(e);
     process.exit(1);
   }
 };
