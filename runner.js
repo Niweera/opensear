@@ -6,6 +6,9 @@ import TwitterService from "./services/twitter-service";
 
 const start = async (tweetID) => {
   console.log(process.env.SAMPLE_ENV_VAR);
+  console.log(
+    `sample env var matches ${"sample_env_var" === process.env.SAMPLE_ENV_VAR}`
+  );
   console.log(`Worker dispatching...`);
   try {
     console.log(`Now executing job ${tweetID}`);
