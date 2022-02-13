@@ -5,6 +5,7 @@ import OpenSeaRobot from "./opensearobot";
 import TwitterService from "./services/twitter-service";
 
 const start = async (tweetID) => {
+  console.log(process.env.SAMPLE_ENV_VAR);
   console.log(`Worker dispatching...`);
   try {
     console.log(`Now executing job ${tweetID}`);
@@ -41,7 +42,7 @@ const start = async (tweetID) => {
     process.exit(0);
   } catch (e) {
     console.error(`Job failed with error`);
-    console.error(e);
+    console.trace(e);
     process.exit(1);
   }
 };
