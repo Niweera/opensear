@@ -1,7 +1,7 @@
 import Main from "../models";
 import { ValidationError } from "../errors";
 
-let validators = {
+const validators = {
   Main: {
     scopes: {
       post: Main.PostValidationSchema,
@@ -17,7 +17,7 @@ function scopeExists(validator, scope) {
 }
 
 function getSchema(model, scope) {
-  let validator = validators[model];
+  const validator = validators[model];
   if (!validator) {
     throw new Error("Validator does not exist");
   }

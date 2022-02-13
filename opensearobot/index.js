@@ -146,10 +146,10 @@ export default class OpenSeaRobot {
     if (numericTexts.length !== 4)
       throw Error("One of numeric traits are missing");
 
-    let tryLevels = this.getLevelsList(numericTexts[0]);
-    let black = this.getLevelsList(numericTexts[1]);
-    let green = this.getLevelsList(numericTexts[2]);
-    let yellow = this.getLevelsList(numericTexts[3]);
+    const tryLevels = this.getLevelsList(numericTexts[0]);
+    const black = this.getLevelsList(numericTexts[1]);
+    const green = this.getLevelsList(numericTexts[2]);
+    const yellow = this.getLevelsList(numericTexts[3]);
 
     if (
       tryLevels.trait !== "Tries" ||

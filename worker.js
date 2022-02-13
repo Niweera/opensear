@@ -9,7 +9,7 @@ import TwitterService from "./services/twitter-service";
 
 function start() {
   console.log("worker dispatching...");
-  let workQueue = new Queue(config.REDIS_QUEUE_NAME, config.REDIS_URL);
+  const workQueue = new Queue(config.REDIS_QUEUE_NAME, config.REDIS_URL);
 
   workQueue.process(
     config.BULL_PROCESS_NAME,
