@@ -12,7 +12,7 @@ const router = Router();
  */
 router.get(
   "/",
-  asyncWrapper((req, res) => {
+  asyncWrapper(async (req, res) => {
     res.send({
       message: "opensear is listening!",
       maintainer: "https://github.com/Niweera",
@@ -27,7 +27,7 @@ router.get(
  */
 router.get(
   "/callback",
-  asyncWrapper((req, res) => {
+  asyncWrapper(async (req, res) => {
     res.send(service.getHandler(req.query));
   })
 );
