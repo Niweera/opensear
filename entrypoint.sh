@@ -2,6 +2,6 @@
 
 set -e
 
-pwd
+printf "\nNow running worker...\n"
 
-ls -alh 
+node --experimental-specifier-resolution=node /runner.js 1492597351089045505
