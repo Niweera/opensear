@@ -1,3 +1,7 @@
-#!/bin/sh -l
+#!/bin/bash
 
-printf "\nRunner completed.\n"
+set -e
+
+pwd
+
+ls -alh

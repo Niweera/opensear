@@ -5,11 +5,10 @@ import ImageService from "./services/image-service";
 import OpenSeaRobot from "./opensearobot";
 import TwitterService from "./services/twitter-service";
 
-function start() {
-  console.log("worker dispatching...");
+function start(tweetID) {
+  console.log(`Worker dispatching...`);
   try {
-    const tweetID = "1492597351089045505";
-    // console.log(`Now executing job ${tweetID}`);
+    console.log(`Now executing job ${tweetID}`);
     // const tweetPikService = new TweetPikService();
     // const imageService = new ImageService();
     // const twitterService = new TwitterService();
@@ -48,4 +47,4 @@ function start() {
   }
 }
 
-start();
+start(process.argv[2]);
