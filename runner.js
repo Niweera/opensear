@@ -5,10 +5,6 @@ import OpenSeaRobot from "./opensearobot";
 import TwitterService from "./services/twitter-service";
 
 const start = async (tweetID) => {
-  console.log(process.env.SAMPLE_ENV_VAR);
-  console.log(
-    `sample env var matches ${"sample_env_var" === process.env.SAMPLE_ENV_VAR}`
-  );
   console.log(`Worker dispatching...`);
   try {
     console.log(`Now executing job ${tweetID}`);
@@ -23,7 +19,16 @@ const start = async (tweetID) => {
       tweetID
     );
 
-    const metadata = await twitterService.getMetadata(tweetID);
+    // const metadata = await twitterService.getMetadata(tweetID);
+
+    const metadata = {
+      name: "wordle 239 4/6 #ghatest4",
+      tweetURL: "https://twitter.com/Niweera/status/1492986339381452800",
+      description:
+        "# Wordle 239 4/6 #ghatest4\nAs published on Feb 14, 2022, 3:47 AM\n\nSigned by [opensearobot](https://opensear.niweera.gq).",
+      tries: "4",
+      statistics: { blackBlocks: "7", greenBlocks: "7", yellowBlocks: "6" },
+    };
 
     let assetURL;
 
