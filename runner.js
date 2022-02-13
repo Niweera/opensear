@@ -19,23 +19,13 @@ const start = async (tweetID) => {
       tweetID
     );
 
-    // const metadata = await twitterService.getMetadata(tweetID);
-
-    const metadata = {
-      name: "wordle 239 4/6 #ghatest4",
-      tweetURL: "https://twitter.com/Niweera/status/1492986339381452800",
-      description:
-        "# Wordle 239 4/6 #ghatest4\nAs published on Feb 14, 2022, 3:47 AM\n\nSigned by [opensearobot](https://opensear.niweera.gq).",
-      tries: "4",
-      statistics: { blackBlocks: "7", greenBlocks: "7", yellowBlocks: "6" },
-    };
+    const metadata = await twitterService.getMetadata(tweetID);
 
     let assetURL;
 
     if (process.platform !== "win32") {
       const xvfb = new Xvfb();
       xvfb.startSync();
-      console.log("xvfb works");
       const openSeaRobot = new OpenSeaRobot();
       assetURL = await openSeaRobot.run(imageFilePath, metadata);
       xvfb.stopSync();
