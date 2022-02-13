@@ -4,4 +4,4 @@ set -e
 
 pwd
 
-ls -alh
+ls -alh /home/runner/work/opensear/opensear
