@@ -144,7 +144,7 @@ export default class OpenSeaRobot {
     const numericTexts = await Promise.all(promises);
 
     if (numericTexts.length !== 4)
-      throw Error("One of numeric traits are missing");
+      throw new Error("One of numeric traits are missing");
 
     const tryLevels = this.getLevelsList(numericTexts[0]);
     const black = this.getLevelsList(numericTexts[1]);
@@ -156,28 +156,28 @@ export default class OpenSeaRobot {
       tryLevels.values[0] !== tries ||
       tryLevels.values[1] !== "6"
     )
-      throw Error(`Tries do not match`);
+      throw new Error(`Tries do not match`);
 
     if (
       black.trait !== "Black" ||
       black.values[0] !== statistics.blackBlocks ||
       black.values[1] !== "30"
     )
-      throw Error(`Black blocks do not match`);
+      throw new Error(`Black blocks do not match`);
 
     if (
       green.trait !== "Green" ||
       green.values[0] !== statistics.greenBlocks ||
       green.values[1] !== "30"
     )
-      throw Error(`Green blocks do not match`);
+      throw new Error(`Green blocks do not match`);
 
     if (
       yellow.trait !== "Yellow" ||
       yellow.values[0] !== statistics.yellowBlocks ||
       yellow.values[1] !== "30"
     )
-      throw Error(`Yellow blocks do not match`);
+      throw new Error(`Yellow blocks do not match`);
 
     console.log(`Numeric traits metadata check completed...`);
   }
