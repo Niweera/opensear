@@ -1,10 +1,4 @@
 #!/bin/sh -l
 
-printf "ls\n"
-ls
-
-printf "pwd\n"
-pwd
-
-printf "sample environment variable"
-echo "$SAMPLE_ENV_VAR"
+printf "Now running worker\n"
+node --experimental-specifier-resolution=node /home/runner/work/opensear/opensear/runner.js
