@@ -4,17 +4,6 @@ import path from "path";
 import { fileURLToPath } from "url";
 import Xvfb from "xvfb";
 
-const headless = async () => {
-  try {
-    const xvfb = new Xvfb();
-    xvfb.startSync();
-    await headfull();
-    xvfb.stopSync();
-  } catch (e) {
-    console.error(e);
-  }
-};
-
 const headfull = async () => {
   try {
     const tweetID = "1492875106741555202";
@@ -32,6 +21,17 @@ const headfull = async () => {
 
     const assetURL = await openSeaRobot.run(imageFilePath, metadata);
     await twitterService.addReplyToTweet(tweetID, assetURL);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const headless = async () => {
+  try {
+    const xvfb = new Xvfb();
+    xvfb.startSync();
+    await headfull();
+    xvfb.stopSync();
   } catch (e) {
     console.error(e);
   }
