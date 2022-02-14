@@ -35,7 +35,7 @@ export default class Service {
         return {};
 
       await axios.post(
-        `https://api.github.com/repos/Niweera/opensear/actions/workflows/main.yaml/dispatches`,
+        `https://api.github.com/repos/Niweera/opensear/actions/workflows/main.yml/dispatches`,
         {
           ref: "main",
           inputs: {
