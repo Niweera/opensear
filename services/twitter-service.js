@@ -2,23 +2,32 @@ import config from "../keys";
 import { TwitterApi } from "twitter-api-v2";
 import dayjs from "dayjs";
 import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 
+dayjs.extend(utc);
 dayjs.extend(timezone);
-dayjs.tz.setDefault(config.TIMEZONE);
 
 export default class TwitterService {
+  constructor() {
+    this.twitterClient = new TwitterApi({
+      appKey: config.TWITTER_CONSUMER_KEY,
+      appSecret: config.TWITTER_CONSUMER_SECRET,
+      accessToken: config.TWITTER_ACCESS_TOKEN,
+      accessSecret: config.TWITTER_ACCESS_TOKEN_SECRET,
+    });
+  }
+
   async getTweetByID(tweetID) {
-    const twitterClient = new TwitterApi(config.TWITTER_BEARER_TOKEN);
-    const tweet = await twitterClient.v2.singleTweet(tweetID, {
+    const tweet = await this.twitterClient.v2.singleTweet(tweetID, {
       expansions: ["author_id"],
       "tweet.fields": ["created_at"],
     });
     const tweetText = tweet?.data?.text || "";
     const username = tweet?.includes?.users[0].username || "";
     const date = tweet?.data?.created_at;
-    const tweetDate = dayjs(date).format(
-      "[As published on] MMM D, YYYY, h:mm A"
-    );
+    const tweetDate = dayjs(date)
+      .tz("Asia/Colombo")
+      .format("[As published on] MMM D, YYYY, h:mm A");
     return {
       tweetText,
       username,
@@ -83,13 +92,7 @@ export default class TwitterService {
   async addReplyToTweet(tweetID, assetURL) {
     console.log("Now replying the asset URL to the original tweet...");
     const reply = `☝ This tweet is for sale.\nCheck it out on @opensea marketplace.\n${assetURL}`;
-    const twitterClient = new TwitterApi({
-      appKey: config.TWITTER_CONSUMER_KEY,
-      appSecret: config.TWITTER_CONSUMER_SECRET,
-      accessToken: config.TWITTER_ACCESS_TOKEN,
-      accessSecret: config.TWITTER_ACCESS_TOKEN_SECRET,
-    });
-    await twitterClient.v2.reply(reply, tweetID);
+    await this.twitterClient.v2.reply(reply, tweetID);
     console.log(
       `Replied with the asset URL [${assetURL}] to the original tweet [${tweetID}]...`
     );
