@@ -99,10 +99,15 @@ export default class OpenSeaRobot {
       '//button[@type="button" and contains(.,"Add more")]'
     );
     await addMore[0].click();
+    await page.waitForTimeout(3000);
     await addMore[0].click();
 
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(10000);
     const nameInputs = await page.$$('input[placeholder="Speed"]');
+
+    if (nameInputs.length < 3)
+      throw new Error("error occurred in filling statistics");
+
     await nameInputs[0].focus();
     await page.keyboard.type("Black", { delay: 25 });
     await nameInputs[1].focus();
@@ -110,7 +115,7 @@ export default class OpenSeaRobot {
     await nameInputs[2].focus();
     await page.keyboard.type("Yellow", { delay: 25 });
 
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(3000);
     const maxInputs = await page.$$('input[placeholder="Max"]');
     await maxInputs[0].focus();
     const promisesOne = [...Array(25).keys()].map(() =>
@@ -128,7 +133,7 @@ export default class OpenSeaRobot {
     );
     await Promise.all(promiseThree);
 
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(3000);
     const minInputs = await page.$$('input[placeholder="Min"]');
     await minInputs[0].focus();
     const blackSides = this.getSideNTries(3, parseInt(statistics.blackBlocks));
@@ -149,7 +154,7 @@ export default class OpenSeaRobot {
     );
     await Promise.all(promisesThree);
 
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(5000);
     const saveButton = await page.$x(
       '//button[@type="button" and contains(.,"Save")]'
     );
