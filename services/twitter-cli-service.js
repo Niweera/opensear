@@ -50,8 +50,7 @@ export default class TwitterCLIService {
         ? environments[0]["webhooks"][0].id
         : "";
 
-    if (!Boolean(webhookID))
-      return { message: "No existing webhooks to delete" };
+    if (!webhookID) return { message: "No existing webhooks to delete" };
 
     const response = await this.twitterClient.v1.delete(
       `account_activity/all/${config.TWITTER_WEBHOOK_ENV}/webhooks/${webhookID}.json`,

@@ -1,10 +1,12 @@
-name: OpenSear Worker
+name: opensear_worker
 
 on:
-  push:
-    branches: [ main ]
-    
   workflow_dispatch:
+    inputs:
+      tweetid:
+        description: "Tweet ID from dispatch"
+        required: true
+        type: string
 
 jobs:
   run_worker:
@@ -14,12 +16,8 @@ jobs:
       - name: Setup and Run Worker
         uses: Niweera/opensear@main
         with:
-          tweetid: "1493076516422717444"
+          tweetid: ${{ github.event.inputs.tweetid }}
         env:
-          TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
-          TWITTER_CLIENT_ID: ${{ secrets.TWITTER_CLIENT_ID }}
-          TWITTER_CLIENT_SECRET: ${{ secrets.TWITTER_CLIENT_SECRET }}
-          TWITTER_APP_ID: ${{ secrets.TWITTER_APP_ID }}
           TWITTER_CONSUMER_KEY: ${{ secrets.TWITTER_CONSUMER_KEY }}
           TWITTER_CONSUMER_SECRET: ${{ secrets.TWITTER_CONSUMER_SECRET }}
           TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
@@ -27,7 +25,5 @@ jobs:
           TWEETPIK_API_KEY: ${{ secrets.TWEETPIK_API_KEY }}
           METAMASK_PASSWORD: ${{ secrets.METAMASK_PASSWORD }}
           METAMASK_MNEMONIC_PHRASE: ${{ secrets.METAMASK_MNEMONIC_PHRASE }}
-          REDIS_URL: ${{ secrets.REDIS_URL }}
-          SAMPLE_ENV_VAR: ${{ secrets.SAMPLE_ENV_VAR }}
 
 

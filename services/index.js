@@ -1,7 +1,6 @@
 import { AuthenticationError } from "../errors";
 import config from "../keys";
 import crypto from "crypto";
-import Queue from "bull";
 
 export default class Service {
   getHandler({ crc_token: crcToken }) {
@@ -29,23 +28,12 @@ export default class Service {
         body.tweet_create_events.length > 0 ? body.tweet_create_events[0] : "";
 
       if (
-        !Boolean(tweetCreateEvent) ||
+        !tweetCreateEvent ||
         !tweetCreateEvent.text.toLowerCase().includes(config.MAGIC_WORD)
       )
         return {};
 
-      const workQueue = new Queue(config.REDIS_QUEUE_NAME, config.REDIS_URL);
-
-      await workQueue.add(
-        config.BULL_PROCESS_NAME,
-        {},
-        {
-          jobId: tweetCreateEvent.id_str,
-          removeOnComplete: true,
-          removeOnFail: true,
-          attempts: 1,
-        }
-      );
+      console.log(tweetCreateEvent.id_str);
     }
     return {};
   }
