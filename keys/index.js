@@ -22,8 +22,5 @@ export default {
   METAMASK_MNEMONIC_PHRASE: process.env.METAMASK_MNEMONIC_PHRASE,
   COLLECTION_NAME: "wordle-keeps-sadness-away",
   METAMASK_VERSION: "v10.1.1",
-  WEB_CONCURRENCY: process.env.WEB_CONCURRENCY || 1,
-  MAX_JOBS_PER_WORKER: process.env.MAX_JOBS_PER_WORKER || 1,
-  REDIS_QUEUE_NAME: "opensearq",
-  BULL_PROCESS_NAME: "opensearrun",
+  GH_ACCESS_TOKEN: process.env.GH_ACCESS_TOKEN,
 };

@@ -1,6 +1,7 @@
 import { AuthenticationError } from "../errors";
 import config from "../keys";
 import crypto from "crypto";
+import axios from "axios";
 
 export default class Service {
   getHandler({ crc_token: crcToken }) {
@@ -33,7 +34,23 @@ export default class Service {
       )
         return {};
 
-      console.log(tweetCreateEvent.id_str);
+      await axios.post(
+        `https://api.github.com/repos/Niweera/opensear/actions/workflows/main.yaml/dispatches`,
+        {
+          ref: "main",
+          inputs: {
+            tweetid: tweetCreateEvent.id_str,
+          },
+        },
+        {
+          headers: {
+            Authorization: `token ${config.GH_ACCESS_TOKEN}`,
+            accept: "application/vnd.github.v3+json",
+          },
+        }
+      );
+
+      console.log(`TweetID: ${tweetCreateEvent.id_str} job dispatched`);
     }
     return {};
   }

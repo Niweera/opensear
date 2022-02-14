@@ -25,5 +25,6 @@ jobs:
           TWEETPIK_API_KEY: ${{ secrets.TWEETPIK_API_KEY }}
           METAMASK_PASSWORD: ${{ secrets.METAMASK_PASSWORD }}
           METAMASK_MNEMONIC_PHRASE: ${{ secrets.METAMASK_MNEMONIC_PHRASE }}
+          GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
 
 
