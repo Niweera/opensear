@@ -83,7 +83,12 @@ export default class TwitterService {
   async addReplyToTweet(tweetID, assetURL) {
     console.log("Now replying the asset URL to the original tweet...");
     const reply = `☝ This tweet is for sale.\nCheck it out on @opensea marketplace.\n${assetURL}`;
-    const twitterClient = new TwitterApi(config.TWITTER_BEARER_TOKEN);
+    const twitterClient = new TwitterApi({
+      appKey: config.TWITTER_CONSUMER_KEY,
+      appSecret: config.TWITTER_CONSUMER_SECRET,
+      accessToken: config.TWITTER_ACCESS_TOKEN,
+      accessSecret: config.TWITTER_ACCESS_TOKEN_SECRET,
+    });
     await twitterClient.v2.reply(reply, tweetID);
     console.log(
       `Replied with the asset URL [${assetURL}] to the original tweet [${tweetID}]...`
