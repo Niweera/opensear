@@ -41,11 +41,11 @@ $ pm2 start --name "opensearobot" npm -- run worker
 
 ## OpenSear in action
 
-### On [OpenSea.io marketplace](https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/3174924704537354725776608230933781217533108654819823768175757862932559429633)
+### On [OpenSea.io marketplace](https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/3174924704537354725776608230933781217533108654819823768175757884922791985153)
 
 ![image](./assets/nft.jpg)
 
-### On [Twitter](https://twitter.com/Niweera/status/1492597351089045505)
+### On [Twitter](https://twitter.com/Niweera/status/1493156992588062721)
 
 ![image](./assets/tweet.jpg)
 
