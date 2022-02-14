@@ -2,6 +2,7 @@ import { AuthenticationError } from "../errors";
 import config from "../keys";
 import crypto from "crypto";
 import axios from "axios";
+import TwitterService from "./twitter-service.js";
 
 export default class Service {
   getHandler({ crc_token: crcToken }) {
@@ -33,6 +34,18 @@ export default class Service {
         !tweetCreateEvent.text.toLowerCase().includes(config.MAGIC_WORD)
       )
         return {};
+
+      const twitterService = new TwitterService();
+      const isAuthenticated = await twitterService.checkAuthenticated(
+        tweetCreateEvent.id_str
+      );
+
+      if (!isAuthenticated) {
+        console.log(
+          `unauthenticated dispatch received! [${tweetCreateEvent.id_str}]`
+        );
+        return {};
+      }
 
       await axios.post(
         `https://api.github.com/repos/Niweera/opensear/actions/workflows/main.yml/dispatches`,

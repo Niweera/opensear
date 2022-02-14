@@ -17,6 +17,40 @@ export default class TwitterService {
     });
   }
 
+  async checkAuthenticated(tweetID) {
+    const { username } = await this.getTweetByID(tweetID);
+
+    const authUser = await this.twitterClient.v2.me({
+      "user.fields": ["username"],
+      "tweet.fields": ["author_id"],
+    });
+
+    if (username !== authUser?.data?.username) return false;
+
+    const mentions = await this.twitterClient.v2.userTimeline(
+      authUser?.data?.id,
+      {
+        expansions: ["referenced_tweets.id"],
+        "tweet.fields": ["referenced_tweets"],
+        since_id: tweetID,
+      }
+    );
+
+    const replies = [];
+
+    for await (const tweet of mentions) {
+      if (
+        tweet.text.includes("This tweet is for sale") &&
+        tweet?.referenced_tweets[0]?.id === tweetID
+      ) {
+        replies.push(tweet.id);
+        break;
+      }
+    }
+
+    return replies.length === 0;
+  }
+
   async getTweetByID(tweetID) {
     const tweet = await this.twitterClient.v2.singleTweet(tweetID, {
       expansions: ["author_id"],
