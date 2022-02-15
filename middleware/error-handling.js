@@ -8,7 +8,7 @@ import chalk from "chalk";
 
 const errorLogger = (err, req, res, next) => {
   if (err.message) {
-    console.log(err);
+    console.log(chalk.yellow(err));
   }
   if (err.stack) {
     console.log(chalk.red(err.message));

@@ -2,6 +2,7 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import cors from "cors";
 import helmet from "helmet";
+import TwitterValidator from "./twitter-validator";
 
 const CommonMiddleware = (app) => {
   app.use(bodyParser.json());
@@ -11,6 +12,7 @@ const CommonMiddleware = (app) => {
 };
 
 const Middleware = (app) => {
+  TwitterValidator(app);
   CommonMiddleware(app);
 };
 

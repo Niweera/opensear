@@ -22,7 +22,7 @@ router.get(
   })
 );
 
-/** @route   GET /callback
+/** @route   GET /CALLBACK_NONCE
  *  @desc    Get CRC Check
  *  @access  Public
  */
@@ -33,7 +33,7 @@ router.get(
   })
 );
 
-/** @route   POST /callback
+/** @route   POST /CALLBACK_NONCE
  *  @desc    Receive Twitter events
  *  @access  Public
  */
