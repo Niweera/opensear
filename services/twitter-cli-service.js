@@ -37,7 +37,7 @@ export default class TwitterCLIService {
     const response = await this.twitterClient.v1.post(
       `account_activity/all/${config.TWITTER_WEBHOOK_ENV}/webhooks.json`,
       {},
-      { query: { url: config.WEBHOOK_URL } }
+      { query: { url: config.WEBHOOK_URL + config.CALLBACK_NONCE } }
     );
 
     return { ...response };

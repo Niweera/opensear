@@ -11,7 +11,7 @@ export default {
   TWITTER_ACCESS_TOKEN_SECRET: process.env.TWITTER_ACCESS_TOKEN_SECRET,
   TWITTER_API_URL: "https://api.twitter.com/1.1",
   TWITTER_WEBHOOK_ENV: "development",
-  WEBHOOK_URL: "https://opensear.niweera.gq/callback",
+  WEBHOOK_URL: "https://opensear.niweera.gq/",
   MAGIC_WORD: "wordle",
   TWEETPIK_API_KEY: process.env.TWEETPIK_API_KEY,
   TWEETPIK_THEME_ID: "323155318417654351",
@@ -23,4 +23,5 @@ export default {
   COLLECTION_NAME: "wordle-keeps-sadness-away",
   METAMASK_VERSION: "v10.1.1",
   GH_ACCESS_TOKEN: process.env.GH_ACCESS_TOKEN,
+  CALLBACK_NONCE: process.env.CALLBACK_NONCE,
 };
