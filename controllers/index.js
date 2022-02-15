@@ -2,6 +2,7 @@ import { Router } from "express";
 import asyncWrapper from "../utilities/async-wrapper";
 import Service from "../services";
 import validator from "../middleware/validator";
+import config from "../keys";
 
 const service = new Service();
 const router = Router();
@@ -26,7 +27,7 @@ router.get(
  *  @access  Public
  */
 router.get(
-  "/callback",
+  `/${config.CALLBACK_NONCE}`,
   asyncWrapper(async (req, res) => {
     res.send(service.getHandler(req.query));
   })
@@ -37,7 +38,7 @@ router.get(
  *  @access  Public
  */
 router.post(
-  "/callback",
+  `/${config.CALLBACK_NONCE}`,
   [validator("Main", "post")],
   asyncWrapper(async (req, res) => {
     res.send(await service.postHandler(req.body));
