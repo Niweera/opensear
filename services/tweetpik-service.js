@@ -8,7 +8,7 @@ export default class TweetPikService {
       {
         tweetId,
         themeId: config.TWEETPIK_THEME_ID,
-        timezone: config.TIMEZONE,
+        timezone: "Asia/Colombo",
       },
       {
         headers: {

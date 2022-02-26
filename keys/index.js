@@ -15,7 +15,6 @@ export default {
   MAGIC_WORD: "wordle",
   TWEETPIK_API_KEY: process.env.TWEETPIK_API_KEY,
   TWEETPIK_THEME_ID: "323155318417654351",
-  TIMEZONE: "Asia/Colombo",
   BLACK_BLOCK: "⬛",
   GREEN_BLOCK: "🟩",
   YELLOW_BLOCK: "🟨",
