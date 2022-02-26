@@ -20,7 +20,6 @@ export default class OpenSeaRobot {
       '//button[.//span[contains(text(),"MetaMask")]]'
     );
     await metaMaskButton[0].click();
-    await page.waitForTimeout(5000);
     await metamask.approve();
     console.log("Wallet connected");
   }
