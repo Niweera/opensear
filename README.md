@@ -4,6 +4,14 @@
 
 **OpenSear** is a system that helps me to mint and list my NFTs on [opensea.io](https://opensea.io) marketplace.
 
+The story behind the **OpenSear** system is discussed in three part limited article series. Read it from the following links.
+
+[How I Automated Minting My Tweets as NFTs on OpenSea](https://medium.com/@niweera/how-i-automated-minting-my-tweets-as-nfts-on-opensea-854c50a44467)
+
+[How I Automated Minting My Tweets as NFTs on OpenSea — Part 2](https://medium.com/@niweera/how-i-automated-minting-my-tweets-as-nfts-on-opensea-part-2-662fcb52c45c)
+
+[How I Automated Minting My Tweets as NFTs on OpenSea — Part 3](https://medium.com/@niweera/how-i-automated-minting-my-tweets-as-nfts-on-opensea-part-3-9464d2652cc0)
+
 Check out my NFT collection [a wordle a day keeps the sadness away](https://opensea.io/collection/wordle-keeps-sadness-away).
 
 ![image](./assets/opensea.jpg)
