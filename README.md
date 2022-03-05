@@ -1,5 +1,7 @@
 [![DeepSource](https://deepsource.io/gh/Niweera/opensear.svg/?label=active+issues&show_trend=true&token=QYOEsSlik9Rn1vj-ijdtzTuv)](https://deepsource.io/gh/Niweera/opensear/?ref=repository-badge)
 
+## OpenSear is not maintained anymore. The [opensea.io](https://opensea.io) platform has added [Google reCAPTCHA](https://www.google.com/recaptcha/about/) verification when creating NFT assets to deter automated minting of NFTs. I am not that good to circumvent Google reCAPTCHA 😂.
+
 # OpenSear
 
 **OpenSear** is a system that helps me to mint and list my NFTs on [opensea.io](https://opensea.io) marketplace.
